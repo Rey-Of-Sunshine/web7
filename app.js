@@ -35,13 +35,14 @@ function deleteElement() {
  
 function showItems(){
     block.innerHTML = ''
-    items.forEach(function (item, index) {
+    
+    items.forEach(function (item, index, items) {
         let newBlock = `
         <div class="item ${item.checked ? "checkedTodo" : ""} ${ getColorClass(item.prior) }">
             <input type="checkbox" id='item_${index}' data-eid="${index}"  ${ item.checked ? 'checked' : ''}>
             <label for="item_${index}">${item.todo}</label>
             ${ index > 0 ? '<img class="item_icon" data-eid="' + index + '" src="arrow-up.png">' : ''}
-            ${ index < 10 ? '<img class="item_icon" data-eid="' + index + '" src="arrow-down.png">' : ''}
+            ${ index < items.lenght ? '<img class="item_icon" data-eid="' + index + '" src="arrow-down.png">' : ''}
         </div>
         `
         block.innerHTML += newBlock
@@ -85,15 +86,17 @@ function upItemPosition(event) {
         toIndex = fromIndex - 1,
         tmp_items = items.splice(fromIndex, 1)[0]
     items.splice(toIndex, 0, tmp_items)
+
     showItems()
 }
 
 function downItemPosition(event) {
     let el = event.currentTarget,
         dfromIndex = parseInt(el.dataset.eid),
-        dtoIndex = dfromIndex ,
+        dtoIndex = dfromIndex + 1,
         dtmp_items = items.splice(dfromIndex, 1)[0]
     items.splice(dtoIndex, 0, dtmp_items)
+
     showItems()
 }
 
