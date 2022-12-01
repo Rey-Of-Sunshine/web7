@@ -42,7 +42,7 @@ function showItems(){
             <input type="checkbox" id='item_${index}' data-eid="${index}"  ${ item.checked ? 'checked' : ''}>
             <label for="item_${index}">${item.todo}</label>
             ${ index > 0 ? '<img class="item_icon" data-eid="' + index + '" src="arrow-up.png">' : ''}
-            ${ index < items.lenght ? '<img class="item_icon" data-eid="' + index + '" src="arrow-down.png">' : ''}
+            ${ index < (items.length-1) ? '<img class="item_icon" data-eid="' + index + '" src="arrow-down.png">' : ''}
         </div>
         `
         block.innerHTML += newBlock
@@ -83,9 +83,9 @@ function getColorClass(prior) {
 function upItemPosition(event) {
     let el = event.currentTarget,
         fromIndex = parseInt(el.dataset.eid),
-        toIndex = fromIndex - 1,
-        tmp_items = items.splice(fromIndex, 1)[0]
-    items.splice(toIndex, 0, tmp_items)
+        thisel = items[fromIndex]
+    items[fromIndex] = items[fromIndex-1]
+    items[fromIndex-1] = thisel
 
     showItems()
 }
@@ -93,9 +93,9 @@ function upItemPosition(event) {
 function downItemPosition(event) {
     let el = event.currentTarget,
         dfromIndex = parseInt(el.dataset.eid),
-        dtoIndex = dfromIndex + 1,
-        dtmp_items = items.splice(dfromIndex, 1)[0]
-    items.splice(dtoIndex, 0, dtmp_items)
+        dthisel = items[dfromIndex]
+    items[dfromIndex] = items[dfromIndex+1]
+    items[dfromIndex+1] = dthisel
 
     showItems()
 }
