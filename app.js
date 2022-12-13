@@ -21,6 +21,7 @@ function addElement() {
     items.push(item)
     console.log(items)
     localStorage.setItem('todos2072', JSON.stringify(items))
+    document.getElementById('addTitle').value = ""
     showItems()
 }
 
