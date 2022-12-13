@@ -21,7 +21,6 @@ function addElement() {
     items.push(item)
     console.log(items)
     localStorage.setItem('todos2072', JSON.stringify(items))
-    document.getElementById('addTitle') = ""
     showItems()
 }
 
@@ -42,6 +41,7 @@ function showItems(){
         <div class="item ${item.checked ? "checkedTodo" : ""} ${ getColorClass(item.prior) }">
             <input type="checkbox" id='item_${index}' data-eid="${index}"  ${ item.checked ? 'checked' : ''}>
             <label for="item_${index}">${item.todo}</label>
+            ${ '<img class="item_icon3" data-eid="' + index + '" src="trashcan.png">'}
             ${ index > 0 ? '<img class="item_icon1" data-eid="' + index + '" src="arrow-up.png">' : ''}
             ${ index < (items.length-1) ? '<img class="item_icon2" data-eid="' + index + '" src="arrow-down.png">' : ''}
         </div>
@@ -64,6 +64,11 @@ function showItems(){
     downItemBtn.forEach(function (el, index) {
         el.addEventListener('click', downItemPosition)
     })
+
+    let delItemBtn = document.querySelectorAll('div.item img.item_icon3')
+    delItemBtn.forEach(function (el, index) {
+        el.addEventListener('click', delItem)
+    })
 }
 
 function getColorClass(prior) {
@@ -75,7 +80,7 @@ function getColorClass(prior) {
             return 'optred'
         break
         case '3':
-            return 'optwhite'
+            return 'optgreen'
         break
         default:
             return 'idk'
@@ -107,6 +112,14 @@ function checkboxHandler(event) {
     items[index].checked = !items[index].checked
     console.log(items)
     localStorage.setItem('todos2072', JSON.stringify(items))
+    showItems()
+}
+
+function delItem(event) {
+    let el = event.currentTarget,
+        fromIndex = parseInt(el.dataset.eid),
+        toIndex = fromIndex
+    items.splice(toIndex, 1)
     showItems()
 }
 
