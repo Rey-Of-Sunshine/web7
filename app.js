@@ -21,6 +21,7 @@ function addElement() {
     items.push(item)
     console.log(items)
     localStorage.setItem('todos2072', JSON.stringify(items))
+    document.getElementById('addTitle') = ""
     showItems()
 }
 
@@ -41,11 +42,12 @@ function showItems(){
         <div class="item ${item.checked ? "checkedTodo" : ""} ${ getColorClass(item.prior) }">
             <input type="checkbox" id='item_${index}' data-eid="${index}"  ${ item.checked ? 'checked' : ''}>
             <label for="item_${index}">${item.todo}</label>
-            ${ index > 0 ? '<img class="item_icon" data-eid="' + index + '" src="arrow-up.png">' : ''}
-            ${ index < (items.length-1) ? '<img class="item_icon" data-eid="' + index + '" src="arrow-down.png">' : ''}
+            ${ index > 0 ? '<img class="item_icon1" data-eid="' + index + '" src="arrow-up.png">' : ''}
+            ${ index < (items.length-1) ? '<img class="item_icon2" data-eid="' + index + '" src="arrow-down.png">' : ''}
         </div>
         `
         block.innerHTML += newBlock
+        
     })
 
     let checkboxes = document.querySelectorAll('input[type=checkbox]')
@@ -53,12 +55,12 @@ function showItems(){
         el.addEventListener('change', checkboxHandler)
     })
 
-    let upItemBtn = document.querySelectorAll('div.item img.item_icon')
+    let upItemBtn = document.querySelectorAll('div.item img.item_icon1')
     upItemBtn.forEach(function (el, index) {
         el.addEventListener('click', upItemPosition)
     })
 
-    let downItemBtn = document.querySelectorAll('div.item img.item_icon')
+    let downItemBtn = document.querySelectorAll('div.item img.item_icon2')
     downItemBtn.forEach(function (el, index) {
         el.addEventListener('click', downItemPosition)
     })
@@ -84,9 +86,9 @@ function upItemPosition(event) {
     let el = event.currentTarget,
         fromIndex = parseInt(el.dataset.eid),
         thisel = items[fromIndex]
+    //items[fromIndex] = items[fromIndex-1] *(items[fromIndex-1]=items[fromIndex], 1)
     items[fromIndex] = items[fromIndex-1]
     items[fromIndex-1] = thisel
-
     showItems()
 }
 
@@ -96,7 +98,6 @@ function downItemPosition(event) {
         dthisel = items[dfromIndex]
     items[dfromIndex] = items[dfromIndex+1]
     items[dfromIndex+1] = dthisel
-
     showItems()
 }
 
