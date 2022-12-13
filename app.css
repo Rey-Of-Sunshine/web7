@@ -54,11 +54,13 @@ input[type=text], input[type=button] {
     height: 24px;
 }
 
-.item_icon {
+.item_icon1, .item_icon2, .item_icon3 {
     width: 24px;
     height: 24px;
     float: right;
 }
+
+
 
 .item_icon:hover {
     cursor: pointer;
